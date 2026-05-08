@@ -1,0 +1,116 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: resumade-monolith
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:resumade}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: 587
+    username: ${MAIL_USER}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 86400000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+# Service Configurations
+auth:
+  enabled: true
+
+resume:
+  enabled: true
+
+ai:
+  enabled: true
+  gemini:
+    api-key: ${GEMINI_API_KEY:empty-key}
+    model: ${AI_GEMINI_MODEL:gemini-1.5-flash}
+    fallback-model: ${AI_GEMINI_FALLBACK_MODEL:gemini-1.5-flash}
+
+services:
+  resume-url: ${RESUME_SERVICE_URL:http://localhost:9090}
+
+export:
+  enabled: true
+  queue:
+    name: export.queue
+    exchange: export.exchange
+    routing-key: export.routing.key
+  notifications:
+    queue: notification.queue
+
+notification:
+  enabled: true
+  queue: notification.queue
+  exchange: notification-exchange
+  routing-key: notification-routing-key
+
+jobmatch:
+  enabled: true
+
+jooble:
+  api-key: ${JOOBLE_API_KEY:}
+
+template:
+  enabled: true
+
+# External APIs Configuration
+razorpay:
+  key:
+    id: ${RAZORPAY_KEY_ID}
+    secret: ${RAZORPAY_KEY_SECRET}
+
+google:
+  oauth:
+    client-id: ${GOOGLE_CLIENT_ID}
+    client-secret: ${GOOGLE_CLIENT_SECRET}
+    redirect-uri: ${GOOGLE_REDIRECT_URI:http://localhost:4200/auth/google}
+
+aws:
+  s3:
+    bucket: ${S3_BUCKET:resumade-exports}
+    region: ${S3_REGION:us-east-1}
+    access-key: ${AWS_ACCESS_KEY}
+    secret-key: ${AWS_SECRET_KEY}
