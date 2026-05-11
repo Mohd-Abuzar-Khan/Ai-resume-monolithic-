@@ -4,9 +4,8 @@
 FROM maven:3.9.4-eclipse-temurin-21 AS builder
 WORKDIR /workspace
 
-# Copy Maven files and download dependencies (leverages Docker cache)
-COPY pom.xml mvnw mvnw.cmd ./
-COPY .mvn .mvn
+# Copy Maven POM and source
+COPY pom.xml ./
 
 # Copy source and build
 COPY src ./src
