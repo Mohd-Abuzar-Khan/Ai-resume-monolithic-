@@ -5,9 +5,9 @@ spring:
   application:
     name: resumade-monolith
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:resumade}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://caboose.proxy.rlwy.net:25606/railway?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: PCJUfmOtnYolQlkbYarrCaQQZFvoYNiL
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
