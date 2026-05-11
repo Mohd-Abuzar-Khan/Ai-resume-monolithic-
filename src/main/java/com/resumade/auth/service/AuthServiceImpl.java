@@ -1,15 +1,11 @@
 package com.resumade.auth.service;
 
-import com.resumade.auth.dto.*;
-import com.resumade.auth.entity.User;
-import com.resumade.auth.exception.EmailAlreadyExistsException;
-import com.resumade.auth.exception.InvalidCredentialsException;
-import com.resumade.auth.exception.UserNotFoundException;
+import java.util.Collections;
+import java.util.Optional;
 
-import com.resumade.auth.repository.UserRepository;
-import com.resumade.auth.security.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -18,13 +14,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Value;
+
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
-import java.util.Collections;
-import java.util.Optional;
+import com.resumade.auth.dto.AuthResponse;
+import com.resumade.auth.dto.ChangePasswordRequest;
+import com.resumade.auth.dto.GoogleLoginRequest;
+import com.resumade.auth.dto.LoginRequest;
+import com.resumade.auth.dto.NotificationEvent;
+import com.resumade.auth.dto.RegisterRequest;
+import com.resumade.auth.dto.ResetPasswordRequest;
+import com.resumade.auth.dto.UpdateProfileRequest;
+import com.resumade.auth.entity.User;
+import com.resumade.auth.exception.EmailAlreadyExistsException;
+import com.resumade.auth.exception.InvalidCredentialsException;
+import com.resumade.auth.exception.UserNotFoundException;
+import com.resumade.auth.repository.UserRepository;
+import com.resumade.auth.security.JwtService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -420,7 +428,7 @@ public class AuthServiceImpl implements AuthService {
                     user.getEmail(),
                     "AUTH",
                     "Password Reset Request",
-                    "To reset your password, click the link: http://localhost:4200/reset-password?token=" + token,
+                    "To reset your password, click the link: https://ai-resume-builder-frontend-sandy.vercel.app/reset-password?token=" + token,
                     "EMAIL"));
         } catch (Exception e) {
             log.error("Failed to send password reset email: {}", e.getMessage());

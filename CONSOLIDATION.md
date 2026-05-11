@@ -101,7 +101,7 @@ resumade
    - API: http://localhost:9090/api/v1/auth/health
 
 3. **Test Google Auth**:
-   - Frontend registers at localhost:4200
+   - Frontend registers at https://ai-resume-builder-frontend-sandy.vercel.app
    - Backend auth at localhost:9090
    - Database: resumade (single)
 
